@@ -7,8 +7,11 @@ export const TRANSPORTS = ['自驾', '高铁', '飞机', '大巴', '其他']
 // 行李清单分类
 export const LUGGAGE_CATEGORIES = ['证件类', '衣物类', '洗漱类', '电子设备类', '药品类', '其他类']
 
-// 默认待办清单
-export const TODO_DEFAULTS = ['订票', '订酒店', '换外币', '检查证件有效期', '购买旅行保险']
+// 默认待办清单（国内出行）
+export const TODO_DEFAULTS = ['订票', '订酒店', '检查证件有效期', '购买旅行保险']
+
+// 出国出行额外补充的默认待办
+export const TODO_DEFAULTS_ABROAD = ['办理护照/签证', '换外币', '准备转换插头']
 
 // 花费分类（用于汇总与图表）
 export const EXPENSE_CATEGORIES = [

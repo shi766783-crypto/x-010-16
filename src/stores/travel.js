@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { planStorage } from '../services/storage'
 import { generateLuggageTemplate, getDestinationType } from '../services/luggage'
-import { generateDefaultTodos } from '../services/todo'
+import { generateDefaultTodos, mergeTodoTemplateDiff } from '../services/todo'
 import { computeAchievements, TOTAL_ACHIEVEMENTS } from '../services/achievements'
 import { computeDashboardStats, computeMemberLeaderboard } from '../services/stats'
 import { daysBetween } from '../utils/format'
@@ -64,7 +64,7 @@ export const useTravelStore = defineStore('travel', {
         photo: input.photo || '',
         members,
         luggage,
-        todos: generateDefaultTodos(),
+        todos: generateDefaultTodos(input.tripType),
         records: [],
         summary: null,
         createdAt: new Date().toISOString(),
@@ -77,6 +77,7 @@ export const useTravelStore = defineStore('travel', {
       const plan = this.planById(id)
       if (!plan) return
       const days = daysBetween(input.startDate, input.endDate)
+      const previousTripType = plan.tripType
       Object.assign(plan, {
         name: input.name,
         destination: input.destination,
@@ -91,6 +92,8 @@ export const useTravelStore = defineStore('travel', {
         notes: input.notes,
         photo: input.photo || '',
       })
+      // 出行类型变化时只补充模板差异，不覆盖用户已修改的待办
+      plan.todos = mergeTodoTemplateDiff(plan.todos, previousTripType, input.tripType)
     },
 
     deletePlan(id) {
