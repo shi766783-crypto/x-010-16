@@ -64,7 +64,7 @@ export const useTravelStore = defineStore('travel', {
         photo: input.photo || '',
         members,
         luggage,
-        todos: generateDefaultTodos(),
+        todos: generateDefaultTodos(input.tripType),
         records: [],
         summary: null,
         createdAt: new Date().toISOString(),
